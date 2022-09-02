@@ -18,7 +18,7 @@
            List.classList.add('nav-item')
          List.innerHTML=`
         
-         <li><a onclick="showNewsPage(${category.category_id})" class="nav-link text-black" href="#">${category.category_name}</a></li>
+         <li><a onclick="showNewsPage('${category.category_id}')" class="nav-link text-black" href="#">${category.category_name}</a></li>
     
          
          `
@@ -36,14 +36,69 @@
  }
  
  
- const showNewsPage=(news_Id)=>{
-    const url=`https://openapi.programming-hero.com/api/news/category/${news_Id}`;
+ const showNewsPage=(news_id)=>{
+    const url=`https://openapi.programming-hero.com/api/news/category/${news_id}`;
     fetch(url)
    .then(res => res.json())
-   .then(data =>(data))
+   .then(data =>displayNewsPage(data.data))
 
 }
 
+
+const displayNewsPage=(newsData)=>{
+    
+        const newsDetailsContainer = document.getElementById('display-news');
+        newsDetailsContainer.innerHTML = ''
+        
+        newsData.forEach(news => {
+    
+            const div = document.createElement('div');
+            div.innerHTML = `
+            <div class="row g-0 mb-5 mt-5 p-3 border-0 bg-light shadow-sm">
+                        <div class="col-md-4 p-3">
+                            <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8 mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title">${news.title}</h5>
+                                <p class="card-text">${news.details.slice(0,550)}...</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                        <img class="pe-2 img-fluid " style="height: 50px; width:50px;" src="${news.image_url}" alt="">
+                                        <div>
+                                        <h6>${news.author.name}</h6>
+                                        <h6>${news.author.published_date.slice(0,10)}</h6>
+                                        </div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-eye"></i>
+                                            <h5>${news.total_view}</h5>
+                                        </div>
+                                        <div class="d-flex">
+                                           <i class="fa-solid fa-star"></i>
+                                           <i class="fa-solid fa-star"></i>
+                                           <i class="fa-solid fa-star"></i>
+                                           <i class="fa-solid fa-star"></i>
+                                           <i class="fa-solid fa-star"></i>
+                                           
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-success">news Details</button>
+                                        </div>
+                                    </div>
+    
+                            </div>
+                        </div>
+                    </div>
+            
+            `;
+            newsDetailsContainer.appendChild(div);
+        })
+    }
+
+
+
+showNewsPage()
 
 
 
