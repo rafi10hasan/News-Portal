@@ -51,8 +51,6 @@ const displayNewsPage=(newsData)=>{
         newsDetailsContainer.innerHTML = ''
         
         newsData.forEach(news => {
-           const views= news.total_view;
-          console.log(views)
             const div = document.createElement('div');
             div.innerHTML = `
             <div class="row g-0 mb-5 mt-5 p-3 border-0 bg-light shadow-sm">
@@ -84,7 +82,7 @@ const displayNewsPage=(newsData)=>{
                                            
                                         </div>
                                         <div>
-                                        <button onclick="loadNewsDetails"(${news._id})" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
+                                        <button onclick="loadNewsDetails"('${news._id}')" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
                                         </div>
 
                                     </div>
@@ -117,18 +115,18 @@ const displayNewsPage=(newsData)=>{
     }
 
     const loadNewsDetails=(details_id)=> {
-        const url=`https://openapi.programming-hero.com/api/news/${details_id}`;
-        fetch(url)
-       .then(res => res.json())
-       .then(data =>displayNewsDetails(data.data))
+
+        console.log(details_id)
+    //     const url=`https://openapi.programming-hero.com/api/news/${details_id}`;
+    //     fetch(url)
+    //    .then(res => res.json())
+    //    .then(data =>displayNewsDetails(data.data))
     
     }
 
-    const displayNewsDetails=(news_Details)=>{
-          console.log(news_Details)
-    }
+ 
 
 loadNewsPage('01')
 
-loadNewsDetails()
+
  
