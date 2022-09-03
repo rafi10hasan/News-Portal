@@ -13,7 +13,6 @@ try{
         const ulContainer=document.getElementById('ul-container');
     
         for(const category of categories){
-          console.log(category)
            const List=document.createElement('li');
            List.classList.add('nav-item')
          List.innerHTML=`
@@ -63,15 +62,15 @@ const displayNewsPage=(newsData)=>{
                                 <p class="card-text">${news.details.slice(0,550)}...</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex">
-                                        <img class="pe-2 img-fluid " style="height: 50px; width:50px;" src="${news.image_url}" alt="">
+                                        <img class="pe-2 img-fluid rounded-circle" style="height: 50px; width:50px" src="${news.author.img}" alt="">
                                         <div>
-                                        <h6>${news.author.name}</h6>
-                                        <h6>${news.author.published_date}</h6>
+                                        <h6>${news.author.name ? news.author.name :"no name found"}</h6>
+                                        <h6 class="d-none d-md-none d-lg-block">${news.author.published_date}</h6>
                                         </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
-                                       <i class="fa-solid fa-eye"></i>
-                                            <h6>${news.total_view}</h6>
+                                           <i class="fa-solid fa-eye mb-2"></i>
+                                            <h6>${news.total_view ? news.total_view :"no view"}</h6>
                                         </div>
                                         <div class="d-none d-md-none d-lg-block d-flex ">
                                            <i class="fa-solid fa-star"></i>
