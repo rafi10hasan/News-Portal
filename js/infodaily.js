@@ -38,6 +38,7 @@ try{
  
  const loadNewsPage=(news_id)=>{
     const url=`https://openapi.programming-hero.com/api/news/category/${news_id}`;
+    toggleSpinner(true)
     fetch(url)
    .then(res => res.json())
    .then(data =>displayNewsPage(data.data))
@@ -46,12 +47,12 @@ try{
 
 
 const displayNewsPage=(newsData)=>{
-    
         const newsDetailsContainer = document.getElementById('display-news');
         newsDetailsContainer.innerHTML = ''
         
         newsData.forEach(news => {
-    
+           const views= news.total_view;
+          console.log(views)
             const div = document.createElement('div');
             div.innerHTML = `
             <div class="row g-0 mb-5 mt-5 p-3 border-0 bg-light shadow-sm">
@@ -83,8 +84,9 @@ const displayNewsPage=(newsData)=>{
                                            
                                         </div>
                                         <div>
-                                            <button class="btn btn-success">news Details</button>
+                                        <button onclick="loadNewsDetails"(${news._id})" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
                                         </div>
+
                                     </div>
     
                             </div>
@@ -96,7 +98,7 @@ const displayNewsPage=(newsData)=>{
 
            
         })
-
+        toggleSpinner(false)
         const itemFounded=document.getElementById('item-founded');
         itemFounded.innerHTML=`
          <p>${newsData.length} items found for category</p>
@@ -104,9 +106,29 @@ const displayNewsPage=(newsData)=>{
     }
 
 
+    const toggleSpinner = isLoading => {
+        const loaderSection = document.getElementById('loader');
+        if(isLoading){
+            loaderSection.classList.remove('d-none')
+        }
+        else{
+            loaderSection.classList.add('d-none');
+        }
+    }
+
+    const loadNewsDetails=(details_id)=> {
+        const url=`https://openapi.programming-hero.com/api/news/${details_id}`;
+        fetch(url)
+       .then(res => res.json())
+       .then(data =>displayNewsDetails(data.data))
+    
+    }
+
+    const displayNewsDetails=(news_Details)=>{
+          console.log(news_Details)
+    }
 
 loadNewsPage('01')
 
-
-
+loadNewsDetails()
  
