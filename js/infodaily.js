@@ -82,7 +82,8 @@ const displayNewsPage=(newsData)=>{
                                            
                                         </div>
                                         <div>
-                                        <button onclick="loadNewsDetails"('${news._id}')" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
+                                        <button onclick="loadNewsDetails('${news._id}')" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
+                                            
                                         </div>
 
                                     </div>
@@ -114,17 +115,33 @@ const displayNewsPage=(newsData)=>{
         }
     }
 
-    const loadNewsDetails=(details_id)=> {
-
-        console.log(details_id)
-    //     const url=`https://openapi.programming-hero.com/api/news/${details_id}`;
-    //     fetch(url)
-    //    .then(res => res.json())
-    //    .then(data =>displayNewsDetails(data.data))
+    const loadNewsDetails=(news_id)=> {
+        
+        fetch(`https://openapi.programming-hero.com/api/news/${news_id}`)
+        .then(res =>res.json(res))
+        .then(data => modalNews(data.data))
+}
+const modalNews = (news_id) =>{
+    console.log(news_id[0])
+    const aa = document.getElementById('aa');
+    aa.innerHTML=""
+    const div = document.createElement("div")
+    div.innerHTML = `
+    <h5><b>Author Name</b>:</h5> <span>${news_id[0].author.name? news_id[0].author.name:"Unknown"}</span>
+    <h3><b>Pulbish Date</b>:</h3> <span>${news_id[0].author.published_date}</span>
+    <p><b>${news_id[0].title?news_id[0].title:"Not found"}</b> <br> ${news_id[0].details}</p>
+    <p><b>Total Views: </b>${news_id[0].total_view?news_id[0].total_view:"No Viwes"}</p>
+    <p><b>Rating: </b>${news_id[0].rating.number} <b>remarks: </b>${news_id[0].rating.badge}</p>
     
-    }
-
- 
+    `
+    
+  
+  
+    
+   aa.appendChild(div)
+  
+    
+ }
 
 loadNewsPage('01')
 
