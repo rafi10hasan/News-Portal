@@ -9,7 +9,6 @@ try{
     }
     
     const displayCategory=(categories) =>{
-        console.log(categories)
         const ulContainer=document.getElementById('ul-container');
     
         for(const category of categories){
@@ -34,6 +33,7 @@ try{
     console.log(error);
  }
  
+ //load news page
  
  const loadNewsPage=(news_id)=>{
     const url=`https://openapi.programming-hero.com/api/news/category/${news_id}`;
@@ -44,12 +44,22 @@ try{
 
 }
 
+//sorting Total view for Listing news page
 
-const displayNewsPage=(newsData)=>{
+ const sortingTotalView = (view)=>{
+    const sorting = view.sort((a, b) => {
+        return view= b.total_view - a.total_view;
+    });
+    
+ }
+
+//display news page
+const displayNewsPage=(totalview,newsData)=>{
         const newsDetailsContainer = document.getElementById('display-news');
         newsDetailsContainer.innerHTML = ''
-        
-        newsData.forEach(news => {
+        //call sorting Total value
+        sortingTotalView(totalview)
+        totalview.forEach(news => {
             const div = document.createElement('div');
             div.innerHTML = `
             <div class="row g-0 mb-5 mt-5 p-3 border-0 bg-light shadow-sm">
@@ -65,7 +75,7 @@ const displayNewsPage=(newsData)=>{
                                         <img class="pe-2 img-fluid rounded-circle" style="height: 50px; width:50px" src="${news.author.img}" alt="">
                                         <div>
                                         <h6>${news.author.name ? news.author.name :"no name found"}</h6>
-                                        <h6 class="d-none d-md-none d-lg-block">${news.author.published_date}</h6>
+                                        <h6 class="d-none d-md-none d-lg-block">${news.author.published_date ?news.author.published_date :"date no found"}</h6>
                                         </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
@@ -81,7 +91,7 @@ const displayNewsPage=(newsData)=>{
                                            
                                         </div>
                                         <div>
-                                        <button onclick="loadNewsDetails('${news._id}')" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">news Details</button>
+                                        <button onclick="loadNewsDetails('${news._id}')" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
                                             
                                         </div>
 
@@ -99,11 +109,11 @@ const displayNewsPage=(newsData)=>{
         toggleSpinner(false)
         const itemFounded=document.getElementById('item-founded');
         itemFounded.innerHTML=`
-         <p>${newsData.length} items found for category</p>
+         <p>${totalview.length} items found for category</p>
         `
     }
 
-
+    //loader 
     const toggleSpinner = isLoading => {
         const loaderSection = document.getElementById('loader');
         if(isLoading){
@@ -113,7 +123,7 @@ const displayNewsPage=(newsData)=>{
             loaderSection.classList.add('d-none');
         }
     }
-
+  //modal data loaded
     const loadNewsDetails=(news_id)=> {
         
         fetch(`https://openapi.programming-hero.com/api/news/${news_id}`)
@@ -121,7 +131,6 @@ const displayNewsPage=(newsData)=>{
         .then(data => detailsNewsData(data.data))
 }
 const detailsNewsData = (news_id) =>{
-    // console.log(news_id[0])
     const newsDetails = document.getElementById('news-details');
     newsDetails.innerHTML=""
     const div = document.createElement("div")
