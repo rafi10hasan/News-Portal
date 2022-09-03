@@ -119,28 +119,26 @@ const displayNewsPage=(newsData)=>{
         
         fetch(`https://openapi.programming-hero.com/api/news/${news_id}`)
         .then(res =>res.json(res))
-        .then(data => modalNews(data.data))
+        .then(data => detailsNewsData(data.data))
 }
-const modalNews = (news_id) =>{
-    console.log(news_id[0])
-    const aa = document.getElementById('aa');
-    aa.innerHTML=""
+const detailsNewsData = (news_id) =>{
+    // console.log(news_id[0])
+    const newsDetails = document.getElementById('news-details');
+    newsDetails.innerHTML=""
     const div = document.createElement("div")
     div.innerHTML = `
-    <h5><b>Author Name</b>:</h5> <span>${news_id[0].author.name? news_id[0].author.name:"Unknown"}</span>
-    <h3><b>Pulbish Date</b>:</h3> <span>${news_id[0].author.published_date}</span>
-    <p><b>${news_id[0].title?news_id[0].title:"Not found"}</b> <br> ${news_id[0].details}</p>
+    <div class="text-center mb-4"><img src="${news_id[0].thumbnail_url}"></div>
+    <h5><b>Author Name:</b> ${news_id[0].author.name? news_id[0].author.name:"Unknown"}</h5>
+    <h5><b>Pulbish Date</b>: ${news_id[0].author.published_date} </h5>
+    <h5><b>Title:</b> ${news_id[0].title?news_id[0].title:"Not found"}</h5>
+    <p><b>Description:</b>${news_id[0].details}</p>
     <p><b>Total Views: </b>${news_id[0].total_view?news_id[0].total_view:"No Viwes"}</p>
-    <p><b>Rating: </b>${news_id[0].rating.number} <b>remarks: </b>${news_id[0].rating.badge}</p>
+    <p><b>Rating: </b>${news_id[0].rating.number}</p>
+    <p><b>remarks: </b>${news_id[0].rating.badge}</p>
     
     `
-    
+   newsDetails.appendChild(div)
   
-  
-    
-   aa.appendChild(div)
-  
-    
  }
 
 loadNewsPage('01')
