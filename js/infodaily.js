@@ -73,7 +73,7 @@ const displayNewsPage=(newsData)=>{
                                        <i class="fa-solid fa-eye"></i>
                                             <h6>${news.total_view}</h6>
                                         </div>
-                                        <div class="d-flex">
+                                        <div class="d-none d-md-none d-lg-block d-flex ">
                                            <i class="fa-solid fa-star"></i>
                                            <i class="fa-solid fa-star"></i>
                                            <i class="fa-solid fa-star"></i>
