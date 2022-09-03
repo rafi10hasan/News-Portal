@@ -1,6 +1,6 @@
 //category section loaded
 
- try{
+try{
     const categoriesLoaded= () =>{
         const url='https://openapi.programming-hero.com/api/news/categories';
         fetch(url)
@@ -18,7 +18,7 @@
            List.classList.add('nav-item')
          List.innerHTML=`
         
-         <li><a onclick="showNewsPage('${category.category_id}')" class="nav-link text-black" href="#">${category.category_name}</a></li>
+         <li><a onclick="loadNewsPage('${category.category_id}')" class="nav-link text-black" href="#">${category.category_name}</a></li>
     
          
          `
@@ -36,7 +36,7 @@
  }
  
  
- const showNewsPage=(news_id)=>{
+ const loadNewsPage=(news_id)=>{
     const url=`https://openapi.programming-hero.com/api/news/category/${news_id}`;
     fetch(url)
    .then(res => res.json())
@@ -60,19 +60,19 @@ const displayNewsPage=(newsData)=>{
                         </div>
                         <div class="col-md-8 mt-4">
                             <div class="card-body">
-                                <h5 class="card-title">${news.title}</h5>
+                                <h5 class="card-title fw-semibold">${news.title}</h5>
                                 <p class="card-text">${news.details.slice(0,550)}...</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex">
                                         <img class="pe-2 img-fluid " style="height: 50px; width:50px;" src="${news.image_url}" alt="">
                                         <div>
                                         <h6>${news.author.name}</h6>
-                                        <h6>${news.author.published_date.slice(0,10)}</h6>
+                                        <h6>${news.author.published_date}</h6>
                                         </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-eye"></i>
-                                            <h5>${news.total_view}</h5>
+                                       <i class="fa-solid fa-eye"></i>
+                                            <h6>${news.total_view}</h6>
                                         </div>
                                         <div class="d-flex">
                                            <i class="fa-solid fa-star"></i>
@@ -93,12 +93,19 @@ const displayNewsPage=(newsData)=>{
             
             `;
             newsDetailsContainer.appendChild(div);
+
+           
         })
+
+        const itemFounded=document.getElementById('item-founded');
+        itemFounded.innerHTML=`
+         <p>${newsData.length} items found for category</p>
+        `
     }
 
 
 
-showNewsPage()
+loadNewsPage('01')
 
 
 
